@@ -1,5 +1,6 @@
 { lib
-, python38
+, buildPythonPackage
+, pytestCheckHook
 , rustPlatform
 , maturin
 }:
@@ -14,7 +15,7 @@ let
     };
 in
 
-python38.pkgs.buildPythonPackage rec {
+buildPythonPackage rec {
   pname = "pyfst";
   version = "0.1.0";
   format = "pyproject";
@@ -35,13 +36,12 @@ python38.pkgs.buildPythonPackage rec {
   };
 
   nativeBuildInputs = with rustPlatform; [ cargoSetupHook maturinBuildHook ];
-  checkInputs = [ python38.pkgs.pytestCheckHook ];
+  checkInputs = [ pytestCheckHook ];
   pythonImportsCheck = [ "pyfst" ];
 
   meta = with lib; {
-    homepage = "https://github.com/kushaldas/johnnycanencrypt";
-    description = "Python module for OpenPGP written in Rust";
-    license = licenses.gpl3Plus;
-    maintainers = with maintainers; [ _0x4A6F ];
+    homepage = "https://github.com/rmcgibbo/pyfst";
+    description = "Python bindings for FST";
+    license = licenses.mit;
   };
 }
