@@ -23,4 +23,6 @@ jobs:
     # Build
     - name: Build
       run: |
+        nix-build -E "with import <nixpkgs> {}; pkgs.python37Packages.callPackage ./default.nix {}"
         nix-build -E "with import <nixpkgs> {}; pkgs.python38Packages.callPackage ./default.nix {}"
+        nix-build -E "with import <nixpkgs> {}; pkgs.python39Packages.callPackage ./default.nix {}"
