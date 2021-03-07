@@ -4,9 +4,10 @@ extern crate memmap;
 extern crate pyo3;
 
 use anyhow::Error;
-use fst::automaton::Levenshtein;
+use fst::automaton;
 use fst::map::MapBuilder;
 use fst::raw::Fst;
+use fst::Automaton;
 use fst::{IntoStreamer, Streamer};
 use memmap::Mmap;
 use pyo3::exceptions::*;
@@ -39,11 +40,28 @@ impl PyFst {
     /// fuzzy(query, distance, /)
     /// --
     ///
-    /// foo bar
+    /// Levenshtein (edit-distance) search
     fn fuzzy(&self, query: &str, distance: u32) -> PyResult<Vec<(String, u64)>> {
-        let lev =
-            Levenshtein::new(query, distance).map_err(|e| PyOSError::new_err(e.to_string()))?;
+        let lev = automaton::Levenshtein::new(query, distance)
+            .map_err(|e| PyOSError::new_err(e.to_string()))?;
         let mut stream = self.handle.search(lev).into_stream();
+        let mut kvs = vec![];
+        while let Some((k, v)) = stream.next() {
+            let ks = std::str::from_utf8(k)?.to_string();
+            let vs = v.value();
+            kvs.push((ks, vs));
+        }
+        Ok(kvs)
+    }
+
+    /// prefix(query, /)
+    /// --
+    ///
+    /// Search by prefix
+    fn prefix(&self, query: &str) -> PyResult<Vec<(String, u64)>> {
+        let matcher = automaton::Str::new(query).starts_with();
+        let mut stream = self.handle.search(matcher).into_stream();
+
         let mut kvs = vec![];
         while let Some((k, v)) = stream.next() {
             let ks = std::str::from_utf8(k)?.to_string();
