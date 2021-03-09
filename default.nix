@@ -26,7 +26,6 @@ buildPythonPackage rec {
     "Cargo.lock"
     "Cargo.toml"
     "tests"
-    "tox.ini"
   ];
 
   cargoDeps = rustPlatform.fetchCargoTarball {
