@@ -3,6 +3,7 @@
 , pytestCheckHook
 , rustPlatform
 , maturin
+, pythonX
 }:
 
 let
@@ -34,7 +35,7 @@ buildPythonPackage rec {
     hash = "sha256:19fkq71mls6rik9kkszjc734xvsjrx88516gj3g6mvqsyrb3angc";
   };
 
-  nativeBuildInputs = with rustPlatform; [ cargoSetupHook maturinBuildHook ];
+  nativeBuildInputs = with rustPlatform; [ cargoSetupHook maturinBuildHook pythonX ];
   checkInputs = [ pytestCheckHook ];
   pythonImportsCheck = [ "pyfst" ];
 
