@@ -21,9 +21,9 @@ jobs:
     # Build
     - name: Build
       run: |
-        nix-build -E "with import <nixpkgs> {}; pkgs.python37Packages.callPackage ./default.nix { pythonX = pkgs.python37; }"
-        nix-build -E "with import <nixpkgs> {}; pkgs.python38Packages.callPackage ./default.nix { pythonX = pkgs.python38; }"
-        nix-build -E "with import <nixpkgs> {}; pkgs.python39Packages.callPackage ./default.nix { pythonX = pkgs.python39; }"
+        nix-build -E "with import <nixpkgs> {}; pkgs.python37Packages.callPackage ./default.nix { }"
+        nix-build -E "with import <nixpkgs> {}; pkgs.python38Packages.callPackage ./default.nix { }"
+        nix-build -E "with import <nixpkgs> {}; pkgs.python39Packages.callPackage ./default.nix { }"
 
   aarch64:
     runs-on: ubuntu-20.04
@@ -46,6 +46,6 @@ jobs:
         OPTIONS="--option system aarch64-linux
                  --option sandbox false
                  --extra-platforms aarch64-linux"
-        nix-build $OPTIONS -E "with import <nixpkgs> {}; pkgs.python37Packages.callPackage ./default.nix { pythonX = pkgs.python37; }"
-        nix-build $OPTIONS -E "with import <nixpkgs> {}; pkgs.python38Packages.callPackage ./default.nix { pythonX = pkgs.python38; }"
-        nix-build $OPTIONS -E "with import <nixpkgs> {}; pkgs.python39Packages.callPackage ./default.nix { pythonX = pkgs.python39; }"
+        nix-build $OPTIONS -E "with import <nixpkgs> {}; pkgs.python37Packages.callPackage ./default.nix { }"
+        nix-build $OPTIONS -E "with import <nixpkgs> {}; pkgs.python38Packages.callPackage ./default.nix { }"
+        nix-build $OPTIONS -E "with import <nixpkgs> {}; pkgs.python39Packages.callPackage ./default.nix { }"
