@@ -34,7 +34,7 @@ in buildPythonPackage rec {
   cargoDeps = rustPlatform.fetchCargoTarball {
     inherit src;
     name = "${pname}-${version}";
-    hash = "sha256:19fkq71mls6rik9kkszjc734xvsjrx88516gj3g6mvqsyrb3angc";
+    hash = "sha256:1wnn2fbkbi20bsqpq9yb6iwafdxkcfkndmziva2wrb8zcyg25n3w";
   };
 
   nativeBuildInputs = [ which ] ++ ( with rustPlatform; [ cargoSetupHook cargo maturin ] );
