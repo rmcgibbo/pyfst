@@ -37,46 +37,12 @@ in buildPythonPackage rec {
     hash = "sha256:1wnn2fbkbi20bsqpq9yb6iwafdxkcfkndmziva2wrb8zcyg25n3w";
   };
 
-  nativeBuildInputs = [ which ] ++ ( with rustPlatform; [ cargoSetupHook cargo maturin ] );
+  nativeBuildInputs = with rustPlatform; [
+    cargoSetupHook
+    maturinBuildHook
+  ];
   checkInputs = [ pytestCheckHook ];
   pythonImportsCheck = [ "pyfst" ];
-
-  buildPhase = with rustPlatform;
-    let
-      ccForBuild = "${stdenv.cc}/bin/${stdenv.cc.targetPrefix}cc";
-      cxxForBuild = "${stdenv.cc}/bin/${stdenv.cc.targetPrefix}c++";
-      ccForHost = "${stdenv.cc}/bin/${stdenv.cc.targetPrefix}cc";
-      cxxForHost = "${stdenv.cc}/bin/${stdenv.cc.targetPrefix}c++";
-      rustBuildPlatform = rust.toRustTarget stdenv.buildPlatform;
-      rustTargetPlatform = rust.toRustTarget stdenv.hostPlatform;
-      rustTargetPlatformSpec = rust.toRustTargetSpec stdenv.hostPlatform;
-    in ''
-      echo "Executing maturinBuildHook"
-      runHook preBuild
-
-      (
-      set -x
-      env \
-        "CC_${rustBuildPlatform}=${ccForBuild}" \
-        "CXX_${rustBuildPlatform}=${cxxForBuild}" \
-        "CC_${rustTargetPlatform}=${ccForHost}" \
-        "CXX_${rustTargetPlatform}=${cxxForHost}" \
-        maturin build \
-          --cargo-extra-args="-j $NIX_BUILD_CORES --frozen" \
-          --target ${rustTargetPlatformSpec} \
-          --manylinux off \
-          --interpreter $(which python) \
-          --strip \
-          --release
-      )
-
-      runHook postBuild
-      # Move the wheel to dist/ so that regular Python tooling can find it.
-      mkdir -p dist
-      mv target/wheels/*.whl dist/
-
-      echo "Finished maturinBuildHook"
-    '';
 
   meta = with lib; {
     homepage = "https://github.com/rmcgibbo/pyfst";

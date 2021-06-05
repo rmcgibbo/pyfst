@@ -1,0 +1,58 @@
+{
+  "nodes": {
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1622922541,
+        "narHash": "sha256-G6q8i2RQwxMzhaJ8tVhiI0b5cqrpZAuiA7Iw97u5YZY=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "a7442bc18ffee0bcf2e8b5ee0b3278a141b16dc2",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "py-utils": {
+      "locked": {
+        "lastModified": 1622925786,
+        "narHash": "sha256-rhdXGpPo+w5unxTyknBlRohjUunjipkMNQDhRhdvCwI=",
+        "owner": "rmcgibbo",
+        "repo": "python-flake-utils",
+        "rev": "a7c6e80d8fdd1f00ab5a873e3f73516554307a1f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "rmcgibbo",
+        "repo": "python-flake-utils",
+        "type": "github"
+      }
+    },
+    "root": {
+      "inputs": {
+        "nixpkgs": "nixpkgs",
+        "py-utils": "py-utils",
+        "utils": "utils"
+      }
+    },
+    "utils": {
+      "locked": {
+        "lastModified": 1622445595,
+        "narHash": "sha256-m+JRe6Wc5OZ/mKw2bB3+Tl0ZbtyxxxfnAWln8Q5qs+Y=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "7d706970d94bc5559077eb1a6600afddcd25a7c8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}
